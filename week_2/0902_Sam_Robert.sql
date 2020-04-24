@@ -17,9 +17,5 @@ WHERE avg_make_mileage >
 --Calculate the variance in highway mileage for all vehicles in the vehicle table.
 --Remember - variance will use a SUM(), a POWER(), a COUNT(),
 --and you’ll have to find a way to get the average of all vehicles in there, too.
-WITH avg_hwy AS
-(SELECT ROUND(AVG(hwy), 2) as mean_hwy
-FROM vehicles)
-
-SELECT ROUND(SUM(POWER((hwy-(SELECT mean_hwy FROM avg_hwy)), 2))/COUNT(*), 2)
+SELECT ROUND(SUM(POWER((hwy-(SELECT AVG(hwy) FROM vehicles)), 2))/COUNT(hwy), 2) AS hwy_variance
 FROM vehicles
